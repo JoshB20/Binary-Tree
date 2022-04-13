@@ -1,0 +1,100 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+// Joshua Button
+// 11/01/2020
+// Binary Search Tree
+namespace BTree
+{
+    public class Node
+    {
+        // Left and Right Node
+        public int Data { get; set; }
+        public Node Left { get; set; }
+        public Node Right { get; set; }
+        public Node()
+        {
+
+        }
+        public Node(int data)
+        {
+            this.Data = data;
+
+        }
+    }
+    // The root will be the start of the tree
+    // Or the first node
+    public class BinaryTree
+    {
+        private Node _root;
+        public BinaryTree()
+        {
+            _root = null;
+        }
+        public void Insert(int data)
+        {
+            //If the tree is empty, return a new, single node 
+            if (_root == null)
+            {
+                _root = new Node(data);
+                return;
+            }
+            //Otherwise, will move down the tree 
+            InsertRec(_root, new Node(data));
+        }
+        // Will establish new node
+        private void InsertRec(Node root, Node newNode)
+        {
+            if (root == null)
+                root = newNode;
+
+            if (newNode.Data < root.Data)
+            {
+                if (root.Left == null)
+                    root.Left = newNode;
+                else
+                    InsertRec(root.Left, newNode);
+
+            }
+            else
+            {
+                if (root.Right == null)
+                    root.Right = newNode;
+                else
+                    InsertRec(root.Right, newNode);
+            }
+        }
+        private void DisplayTree(Node root)
+        {
+            if (root == null) return;
+
+            DisplayTree(root.Left);
+            System.Console.Write(root.Data + " ");
+            DisplayTree(root.Right);
+        }
+        public void DisplayTree()
+        {
+            DisplayTree(_root);
+        }
+
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            BinaryTree tree = new BinaryTree();
+            Node root = new Node();
+
+            tree.Insert(5);
+            tree.Insert(3);
+            tree.Insert(7);
+            tree.Insert(2);
+            tree.Insert(4);
+            tree.DisplayTree();
+        }
+    }
+}
